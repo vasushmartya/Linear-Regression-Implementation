@@ -5,15 +5,12 @@ class SimpleLinearRegression:
     def __init__(self):
         pass
 
-    def w1(self):
-        arr = []
-        for i in range(len(self.X)):
-            arr.append(((self.X[i] - self.Xmean), (self.y[i] - self.ymean)))
-        num = np.sum([tup[0]*tup[1] for tup in arr])
-        den = np.sum([(x - self.Xmean)**2 for x in self.X])
-        self.w1 = num/den
+    def compute_w1(self):
+        num = np.sum((self.X - self.Xmean) * (self.y - self.ymean))
+        den = np.sum((self.X - self.Xmean) ** 2)
+        self.w1 = num / den
 
-    def w0(self):
+    def compute_w0(self):
         w0 = self.ymean - (self.w1*self.Xmean)
         self.w0 = w0
     
@@ -26,8 +23,8 @@ class SimpleLinearRegression:
         self.y = y
         self.Xmean = np.mean(X)
         self.ymean = np.mean(y)
-        self.w1()
-        self.w0()
+        self.compute_w1()
+        self.compute_w0()
     
     def predict(self, X):
         predictions = []
